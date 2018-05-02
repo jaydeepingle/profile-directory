@@ -1,0 +1,153 @@
+import java.io.*;
+import java.net.*;
+class Client
+{
+   public InputStream in;
+   public OutputStream out;
+   private Socket client;
+   public Client(String host,int port)
+    {
+    try
+     {
+      client=new Socket(host.port);
+      System.out.println("Client requesting to the server");
+      System.out.println("Socket Info :\n"+client);
+      out=client.getOutputStream();
+      in=client.getInputStream();
+     }
+    catch(IOException e)
+      {
+       System,out.println("IOException:"+e);
+       }
+public class MyClient
+{
+public static void main(String args[])
+{
+string start,res;
+Client client;
+BufferedReader br;
+PrinterWriter wr;
+String msg;
+char ch='y';
+BufferedReader dis=new BufferedReader(new InputStreamReader(System.in));
+client=new Client("",1200);
+do
+{
+  try
+
+   {
+     br=new BufferedReader(new InputStreamReader(System.in));
+wr=new PrintWriter(new OutputStreamWriter(client.out));
+start=br.readLine();
+System.out.println("Server :"+start+");
+System.out.println("Please enter the text");
+msg=dis.readLine();
+Sustem.out.println("I am sending "+msg);
+wr.println(msg);
+wr.flush();
+)
+catch(IOEsception e)
+{
+System.out.println(IOException :"+e);
+}
+System.out.println("Do you want to send more information");
+try
+{
+ch=(char)dis.read();
+}
+catch(IOException e)
+{
+System.out.println("IOException"+e);
+System.exit(0);
+}
+}while(ch!='n');
+}
+}
+//Server Program
+class Server
+{
+private ServerSocket server;
+public InputStream in;
+public OutputStream out;
+private Socket socket;
+public InetAddres ina;
+public byte[] bytes;
+int fbytes[]=new int[4];
+public Server(int port);
+{
+try
+{
+server=new ServerSocket(port);
+System.out.println("Server nsocket befort accept");
+System.out.println("server waiting for client");
+socket=server.accept();
+ina=socket.getlnetAddress();
+System.out.println("Server responses to"+ina.getHostName()+"\n");
+System.out.print("With IP Address");
+bytes=ina.getAddress();
+for(int i=0;i<4;i++)
+fbytes[i]=bytes[i]&255;
+System.out.println(fbytes[0]+"."+fbytes[1]+"."fbytes[2]+"."+fbytes[3]);
+in=socket.getInputStream();
+out=socket.getOutputStream();
+}
+catch(IOException e)
+{
+System.out.println("IOException"+ e);
+}
+}
+}
+public class MyServer
+{
+final static int SERVER_PORT=1200;
+public static void main(String args[])
+{
+String req;
+Server server;
+BufferedReader br;
+PrintWriter wr;
+String msg;
+char ch='y';
+BufferedReader dis=new BufferedReader(new InputStreamReader(System.in));
+server=new Server(SERVER_PORT);
+br=new BufferedReader(new InputStreamReader(server.in));
+wr=new PrintWriter(new OutputStreamWriter(server.out));
+wr.println("server data information is"+ new Date());
+wr.flush();
+while(true)
+{
+try
+{
+req=br.readLine();
+System.out.println("\nClient says :"+req);
+if(req.startsWith("QUIT"))
+{
+System.out.println("Disconnecting...");
+System.exit(0);
+}
+if(req.startsWith("END"))
+{
+wr.println("Quaiting");
+wr.flush();
+}
+else
+{
+System.out.println("send");
+System.out.flush();
+msg=dis.readLine();
+wr.println(msg);
+wr.flush();
+}
+}
+catch(SocketException e)
+{
+System.out.println("Socket error");
+break;
+}
+catch(IOException e)
+{
+System.out.println("IOException :"+e);
+
+}
+}
+}}
